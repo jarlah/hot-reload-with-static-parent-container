@@ -20,19 +20,14 @@ const Rerenderer: React.FC = () => {
 	const [component, setComponent] = useState(<App />)
 	useEffect(() => {
 		console.log("Mounting");
-		const subscription = appSubject$.subscribe((Val) => {
-			setComponent(<Val />);
+		const subscription = appSubject$.subscribe((NextApp) => {
+			setComponent(<NextApp />);
 		});
 		return () => {
 			console.log("Unmounting");
 			subscription.unsubscribe();
 		}
 	}, []);
-
-	if (!component) {
-		console.log("No Component");
-		return <></>;
-	}
 
 	return <div>{component}</div>;
 };
