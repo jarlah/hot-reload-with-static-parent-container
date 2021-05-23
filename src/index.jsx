@@ -6,7 +6,7 @@ import SimpleSubject from 'simple-subject';
 
 const appSubject$ = new SimpleSubject();
 
-const StaticParentContainer: React.FC = ({ children }) => {
+const StaticParentContainer = ({ children }) => {
 	return (
 		<div>
 			<div>Should never remount</div>
@@ -16,7 +16,7 @@ const StaticParentContainer: React.FC = ({ children }) => {
 	);
 };
 
-const Rerenderer: React.FC = () => {
+const Rerenderer = () => {
 	const [component, setComponent] = useState(<App />)
 	useEffect(() => {
 		console.log("Mounting");
