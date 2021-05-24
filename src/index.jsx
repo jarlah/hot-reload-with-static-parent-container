@@ -18,7 +18,7 @@ const StaticParentContainer = ({ children }) => {
 	);
 };
 
-const Rerenderer = ({ store }) => {
+const Rerenderer = () => {
 	const [component, setComponent] = useState(<App />);
 
 	useEffect(() => {
@@ -28,7 +28,7 @@ const Rerenderer = ({ store }) => {
 		return () => {
 			subscription.unsubscribe();
 		}
-	}, [store]);
+	}, []);
 
 	return <div>{component}</div>;
 };
