@@ -35,7 +35,7 @@ const Rerenderer = ({ store }) => {
 
 ReactDOM.render(
   <React.StrictMode>
-    <StaticParentContainer>
+	<StaticParentContainer>
 		<Provider store={store}>
 			<Rerenderer />
 		</Provider>
