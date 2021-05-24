@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import SimpleSubject from 'simple-subject';
+import store from './store';
+import { Provider } from 'react-redux';
 
 const appSubject$ = new SimpleSubject();
 
@@ -10,31 +12,34 @@ const StaticParentContainer = ({ children }) => {
 	return (
 		<div>
 			<div>Should never remount</div>
-			<div>For ex an auth container</div>
+			<div>(for ex an auth container that keeps a session needs to work like this)</div>
 			<div>{children}</div>
 		</div>
 	);
 };
 
-const Rerenderer = () => {
-	const [component, setComponent] = useState(<App />)
+const Rerenderer = ({ store }) => {
+	const [component, setComponent] = useState(<App />);
+
 	useEffect(() => {
-		console.log("Mounting");
 		const subscription = appSubject$.subscribe((NextApp) => {
 			setComponent(<NextApp />);
 		});
 		return () => {
-			console.log("Unmounting");
 			subscription.unsubscribe();
 		}
-	}, []);
+	}, [store]);
 
 	return <div>{component}</div>;
 };
 
 ReactDOM.render(
   <React.StrictMode>
-    <StaticParentContainer><Rerenderer /></StaticParentContainer>
+    <StaticParentContainer>
+		<Provider store={store}>
+			<Rerenderer />
+		</Provider>
+	</StaticParentContainer>
   </React.StrictMode>,
   document.getElementById('root')
 );
